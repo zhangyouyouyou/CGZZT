@@ -19,7 +19,11 @@ A dirty deal between three beautiful sister and an uncle
 
 ### predict.py
 
-用模型文件进行预测（内含切图部分）
+用模型文件进行预测
+
+### predictone.py
+
+对单张图片进行预测
 
 ### im2rec.py
 
