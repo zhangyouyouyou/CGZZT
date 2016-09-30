@@ -33,6 +33,10 @@ A dirty deal between three beautiful sister and an uncle
 
 统计当前目录下的中文文件信息
 
+### pull.py
+
+在指定网址循环下载图片
+
 ### *.rec
 
 二进制格式训练集
