@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 import mxnet as mx
+import argparse
 
 def guass(image_path):
     src = cv2.imread(image_path,cv2.IMREAD_GRAYSCALE)
@@ -38,7 +39,7 @@ def predict_pic(mod,im):
     dataiter = mx.io.NDArrayIter(
         im)
     prob = mod.predict(dataiter)
-    print prob
+    # print prob
     py = np.argmax(prob,axis = 1)
     # print 'predict ans = ', py[0]
     return py[0]
@@ -56,6 +57,15 @@ def predict(mod,name):
     return ans
 
 if __name__ == '__main__':
-    mod = load_model()
-    ans = predict(mod,'val.png')
-    print ans
+    parser = argparse.ArgumentParser(
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+        description='Predict one picture')
+    parser.add_argument('name',type=str,help='Picture name')
+    args = parser.parse_args()
+
+    if args.name == None:
+        print('No file input')
+    else:
+        mod = load_model()
+        ans = predict(mod,args.name)
+        print("%c%c%c%c" % (ans[0],ans[1],ans[2],ans[3]))
