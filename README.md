@@ -7,6 +7,16 @@ A dirty deal between three beautiful sister and an uncle
 - Anaconda2
 - cv2 (conda install -c https://conda.binstar.org/menpo opencv)
 
+## 使用说明
+
+先确定mxnet以及cv2正确安装
+
+```
+python predictone.py pic.png
+```
+
+![image](https://github.com/tsstss123/CGZZT/raw/master/screenshot.png)
+
 ## 代码说明
 
 ### inception-bn-28.py
