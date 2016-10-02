@@ -10,6 +10,9 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QVBoxLayout>
+#include <QDragEnterEvent>
+#include <QMimeData>
+#include <QFileInfo>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -37,11 +40,49 @@ MainWindow::MainWindow(QWidget *parent)
     file->addAction(openAction);
 
     setCentralWidget(widget);
+
+    setAcceptDrops(true);
 }
 
 MainWindow::~MainWindow()
 {
 
+}
+
+void MainWindow::dragEnterEvent(QDragEnterEvent *event)
+{
+    if(event->mimeData()->hasFormat("text/uri-list")){
+        event->acceptProposedAction();
+        qDebug() << "Accept Drag Enter" ;
+    }
+}
+
+void MainWindow::dropEvent(QDropEvent *event)
+{
+    QList<QUrl> urls = event->mimeData()->urls();
+    if (urls.isEmpty()) {
+        return;
+    }
+
+    QString fileName = urls.first().toLocalFile();
+    if (fileName.isEmpty()) {
+        return;
+    }
+
+    QFileInfo fileInfo(fileName);
+
+    if(fileInfo.suffix() == QString(tr("png")))
+    {
+        qDebug() << "Find path = " << fileName;
+        path = fileName;
+        picSelected();
+    }
+}
+
+void MainWindow::picSelected()
+{
+    setLabelPic();
+    predict();
 }
 
 void MainWindow::openFile()
@@ -52,8 +93,7 @@ void MainWindow::openFile()
                                         tr("PNG Files(*.png)"));
     qDebug() << path;
     if(!path.isEmpty()) {
-        setLabelPic();
-        predict();
+        picSelected();
     } else {
         QMessageBox::warning(this, tr("Path"),
                              tr("You did not select any file."));

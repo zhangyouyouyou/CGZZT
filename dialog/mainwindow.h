@@ -6,6 +6,7 @@
 #include <QWidget>
 #include <QAction>
 #include <QPixmap>
+#include <QDrag>
 
 class MainWindow : public QMainWindow
 {
@@ -15,6 +16,10 @@ public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+protected:
+    void dragEnterEvent(QDragEnterEvent *event);
+    void dropEvent(QDropEvent *event);
+
 private:
     QLabel *imageLabel;
     QLabel *ansLabel;
@@ -22,6 +27,7 @@ private:
     QAction *openAction;
     QString path;
 
+    void picSelected();
     void openFile();
     void setLabelPic();
     void predict();
